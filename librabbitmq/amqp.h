@@ -2493,6 +2493,38 @@ AMQP_PUBLIC_FUNCTION
 int AMQP_CALL amqp_set_handshake_timeout(amqp_connection_state_t state,
                                          struct timeval *timeout);
 
+/**
+ * Get the RPC timeout.
+ *
+ *\warning this is an advanced function. Do not use unless you know what you're
+ * doing.
+ *
+ * \param [in] state the connection object
+ * \return a struct timeval representing the current RPC timeout for the state
+ * object. A NULL value represents an infinite timeout. The memory returned is
+ * owned by the connection object.
+ *
+ * \since v0.9.0
+ */
+AMQP_PUBLIC_FUNCTION
+struct timeval *AMQP_CALL amqp_get_rpc_timeout(amqp_connection_state_t state);
+
+/**
+ * Set the RPC timeout.
+ *
+ * \param [in] state the connection object
+ * \param [in] timeout a struct timeval* representing new RPC timeout for the
+ * state object. NULL represents an infinite timeout. The value of timeout is
+ * copied internally, the caller is responsible for ownership of the passed
+ * pointer, it does not need to remain valid after this function is called.
+ * \return AMQP_STATUS_SUCCESS on success.
+ *
+ * \since v0.9.0
+ */
+AMQP_PUBLIC_FUNCTION
+int AMQP_CALL amqp_set_rpc_timeout(amqp_connection_state_t state,
+                                   struct timeval *timeout);
+
 AMQP_END_DECLS
 
 

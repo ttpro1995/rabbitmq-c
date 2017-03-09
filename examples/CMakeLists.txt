@@ -68,6 +68,9 @@ target_link_libraries(amqps_unbind ${RMQ_LIBRARY_TARGET})
 add_executable(amqps_bind amqps_bind.c ${COMMON_SRCS})
 target_link_libraries(amqps_bind ${RMQ_LIBRARY_TARGET})
 
+add_executable(send_to_queue_example send_to_queue_example.c ${COMMON_SRCS})
+target_link_libraries(send_to_queue_example ${RMQ_LIBRARY_TARGET})
+
 add_executable(amqps_listenq amqps_listenq.c ${COMMON_SRCS})
 target_link_libraries(amqps_listenq ${RMQ_LIBRARY_TARGET})
 endif (ENABLE_SSL_SUPPORT)

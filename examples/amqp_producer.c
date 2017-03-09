@@ -59,12 +59,14 @@ static void send_batch(amqp_connection_state_t conn,
   uint64_t previous_report_time = start_time;
   uint64_t next_summary_time = start_time + SUMMARY_EVERY_US;
 
-  char message[256];
+  char message[] = "Meow, I am Pusheen the cat !!!";
   amqp_bytes_t message_bytes;
-
+  
+  /*
   for (i = 0; i < (int)sizeof(message); i++) {
     message[i] = i & 0xff;
   }
+  */
 
   message_bytes.len = sizeof(message);
   message_bytes.bytes = message;
@@ -74,9 +76,9 @@ static void send_batch(amqp_connection_state_t conn,
 
     die_on_error(amqp_basic_publish(conn,
                                     1,
-                                    amqp_cstring_bytes("amq.direct"),
+                                    amqp_cstring_bytes(""),
                                     amqp_cstring_bytes(queue_name),
-                                    0,
+                                    1,
                                     0,
                                     NULL,
                                     message_bytes),
@@ -140,12 +142,12 @@ int main(int argc, char const *const *argv)
     die("opening TCP socket");
   }
 
-  die_on_amqp_error(amqp_login(conn, "/", 0, 131072, 0, AMQP_SASL_METHOD_PLAIN, "guest", "guest"),
+  die_on_amqp_error(amqp_login(conn, "/", 0, 131072, 0, AMQP_SASL_METHOD_PLAIN, "capstone13", "capstone"),
                     "Logging in");
   amqp_channel_open(conn, 1);
   die_on_amqp_error(amqp_get_rpc_reply(conn), "Opening channel");
 
-  send_batch(conn, "test queue", rate_limit, message_count);
+  send_batch(conn, "meow", rate_limit, message_count);
 
   die_on_amqp_error(amqp_channel_close(conn, 1, AMQP_REPLY_SUCCESS), "Closing channel");
   die_on_amqp_error(amqp_connection_close(conn, AMQP_REPLY_SUCCESS), "Closing connection");

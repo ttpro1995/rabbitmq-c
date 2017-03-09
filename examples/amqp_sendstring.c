@@ -60,11 +60,11 @@ int main(int argc, char const *const *argv)
     return 1;
   }
 
-  hostname = argv[1];
-  port = atoi(argv[2]);
-  exchange = argv[3];
-  routingkey = argv[4];
-  messagebody = argv[5];
+  hostname = argv[1]; // 125.212.233.106
+  port = atoi(argv[2]); // 5672
+  exchange = argv[3]; // amq.direct
+  routingkey = argv[4]; // test
+  messagebody = argv[5]; // hello world
 
   conn = amqp_new_connection();
 
@@ -78,7 +78,7 @@ int main(int argc, char const *const *argv)
     die("opening TCP socket");
   }
 
-  die_on_amqp_error(amqp_login(conn, "/", 0, 131072, 0, AMQP_SASL_METHOD_PLAIN, "guest", "guest"),
+  die_on_amqp_error(amqp_login(conn, "/", 0, 131072, 0, AMQP_SASL_METHOD_PLAIN, "capstone13", "capstone"),
                     "Logging in");
   amqp_channel_open(conn, 1);
   die_on_amqp_error(amqp_get_rpc_reply(conn), "Opening channel");
